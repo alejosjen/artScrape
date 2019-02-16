@@ -26,22 +26,25 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
-// app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with axios
-//   axios.get("https://www.theartnewspaper.com/news").then(function(response) {
-//     // Then, we load that into cheerio and save it to $ for a shorthand selector
-//     var $ = cheerio.load(response.data);
+app.get("/scrape", function(req, res) {
+
+//   First, we grab the body of the html with axios
+  axios.get("https://www.theartnewspaper.com/news").then(function(response) {
+    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    // $("article h2").each(function(i, element) {
-    //   // Save an empty result object
-    //   var result = {};
+    $("div.article-preview").each(function(i, element) {
+      // Save an empty result object
+      var results = [];
 
     //   // Add the text and href of every link, and save them as properties of the result object
     //   result.title = $(this)
@@ -50,7 +53,19 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
     //   result.link = $(this)
     //     .children("a")
     //     .attr("href");
+    //   result.excerpt = $(this)
+    //     .children("p.cp-excerpt")
+    //     .text();
+    var title = $(element).children("a").text();
+    var link = $(element).children("a").attr("href");
+    var excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
 
+        results.push({
+            title: title,
+            link: link,
+            excerpt: excerpt
+          });
+        console.log(results);
       // Create a new Article using the `result` object built from scraping
     //   db.Article.create(result)
     //     .then(function(dbArticle) {
@@ -66,8 +81,8 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
     // Send a message to the client
 //       res.send("Scrape Complete");
 //       // res.status(500).send();
-//   });
-// });
+  });
+});
 
 // // Route for getting all Articles from the db
 // app.get("/articles", function(req, res) {
@@ -117,7 +132,7 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 //       // If an error occurred, send it to the client
 //       res.json(err);
 //     });
-// });
+});
 
 // Start the server
 app.listen(PORT, function() {
