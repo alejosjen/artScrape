@@ -11,6 +11,8 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
+// Require routes
+var htmlRoutes = require("./routes/htmlRoutes");
 var PORT = 3000;
 
 // Initialize Express
@@ -23,8 +25,12 @@ app.use(logger("dev"));
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 // Make public a static folder
 app.use(express.static("public"));
+
+//Pull in htmlRoutes
+htmlRoutes(app);
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
@@ -33,54 +39,41 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 
-// A GET route for scraping the echoJS website
-app.get("/scrape", function(req, res) {
+// A GET route for scraping the art newspaper website
+app.get("/scrape", function (req, res) {
 
-//   First, we grab the body of the html with axios
-  axios.get("https://www.theartnewspaper.com/news").then(function(response) {
+  //   First, we grab the body of the html with axios
+  axios.get("https://www.theartnewspaper.com/news").then(function (response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
-
+    var results = [];
     // Now, we grab every h2 within an article tag, and do the following:
-    $("div.article-preview").each(function(i, element) {
+    $("div.article-preview").each(function (i, element) {
       // Save an empty result object
-      var results = [];
 
-    //   // Add the text and href of every link, and save them as properties of the result object
-    //   result.title = $(this)
-    //     .children("a")
-    //     .text();
-    //   result.link = $(this)
-    //     .children("a")
-    //     .attr("href");
-    //   result.excerpt = $(this)
-    //     .children("p.cp-excerpt")
-    //     .text();
-    var title = $(element).children("a").text();
-    var link = $(element).children("a").attr("href");
-    var excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
+      var title = $(element).children("a").text();
+      var link = $(element).children("a").attr("href");
+      var excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
+      result = {
+        title: title,
+        link: link,
+        excerpt: excerpt
+      };
+      results.push(result);
+      console.log(result);
+    });
 
-        results.push({
-            title: title,
-            link: link,
-            excerpt: excerpt
-          });
-        console.log(results);
-      // Create a new Article using the `result` object built from scraping
-    //   db.Article.create(result)
-    //     .then(function(dbArticle) {
-    //       // View the added result in the console
-    //       console.log(dbArticle);
-    //     })
-    //     .catch(function(err) {
-    //       // If an error occurred, log it
-    //       console.log(err);
-    //     });
-    // });
-
-    // Send a message to the client
-//       res.send("Scrape Complete");
-//       // res.status(500).send();
+    db.Article.insertMany(results)
+      .then(function (dbArticle) {
+        // View the added result in the console
+        res.send("Scrape Complete");
+        console.log(dbArticle);
+      })
+      .catch(function (err) {
+        // If an error occurred, log it
+        res.status(500).send();
+        console.log(err);
+      });
   });
 });
 
@@ -120,9 +113,9 @@ app.get("/scrape", function(req, res) {
 //       // If an error occurred, send it to the client
 //       res.json(err);
 //     });
-});
+// });
 
 // Start the server
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
 });
