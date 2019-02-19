@@ -66,7 +66,7 @@ app.get("/scrape", function (req, res) {
         excerpt: excerpt
       };
       results.push(result);
-      console.log(results);
+      // console.log(results);
     });
 
     db.Article.insertMany(results)
