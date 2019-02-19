@@ -26,6 +26,12 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Set Handlebars
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Make public a static folder
 app.use(express.static("public"));
 
@@ -45,29 +51,29 @@ app.get("/scrape", function (req, res) {
   //   First, we grab the body of the html with axios
   axios.get("https://www.theartnewspaper.com/news").then(function (response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(response.data);
-    var results = [];
-    // Now, we grab every h2 within an article tag, and do the following:
+    const $ = cheerio.load(response.data);
+    const results = [];
+    // Now, we grab every div tag with article-preview class, and do the following:
     $("div.article-preview").each(function (i, element) {
       // Save an empty result object
-
-      var title = $(element).children("a").text();
-      var link = $(element).children("a").attr("href");
-      var excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
+      const title = $(element).children("a").text();
+      const scrapedLink = $(element).children("a").attr("href");
+      const excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
+      const link = `https://www.theartnewspaper.com${scrapedLink}`;
       result = {
         title: title,
         link: link,
         excerpt: excerpt
       };
       results.push(result);
-      console.log(result);
+      console.log(results);
     });
 
     db.Article.insertMany(results)
       .then(function (dbArticle) {
         // View the added result in the console
         res.send("Scrape Complete");
-        console.log(dbArticle);
+        console.log("from server: " + dbArticle);
       })
       .catch(function (err) {
         // If an error occurred, log it

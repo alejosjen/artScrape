@@ -1,6 +1,11 @@
 var db = require("../models");
 // Route for getting all Articles from the db
 module.exports = function(app) {
+
+app.get("/", function(request, response){
+    response.render("index");
+})
+    
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
