@@ -48,11 +48,13 @@ $(document).on("click", "p", function () {
     })
         // With that done, add the comment information to the page
         .then(function (data) {
-            console.log("from ajax on p click: " + data);
+            console.log(data);
             // The title of the article
             // An input to enter a new title
             // A textarea to add a new comment body
             // A button to submit a new comment, with the id of the article saved to it
+            
+            //MODAL AREA INSTEAD
             $("#comments").append(`
                 <h2>${data.title}</h2>
                 <input id='title-input' name='title' >
