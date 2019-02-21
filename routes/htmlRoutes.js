@@ -69,7 +69,6 @@ app.get("/articles/:id", function(req, res) {
       .then(function(dbArticle) {
         // If we were able to successfully find an Article with the given id, send it back to the client
         res.json(dbArticle);
-        // $('#commentModal').modal();
       })
       .catch(function(err) {
         // If an error occurred, send it to the client
@@ -97,3 +96,11 @@ app.post("/articles/:id", function(req, res) {
       });
   });
 };
+
+// Route for viewing saved Articles associated with Comments
+// app.get("/saved", function(req, res){
+//     db.Comment.find({ _id: req.params.id }, { comment: dbComment._id });
+//     .then(function(dbSaved){
+//         return db.A
+//     })
+// })
