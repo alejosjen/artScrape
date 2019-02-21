@@ -1,4 +1,15 @@
-body { background-color: #F2F6D0 }
+body {
+  background-color: #CEEDFF;
+  color: #000;
+  font-family: 'Neucha', cursive, serif;
+  padding-bottom: 60px;
+}
+h1 {
+  padding-top: 20px;
+}
+h2 {
+  background-color: #C7D3E8;
+}
 #wrapper {
   width: 960px;
   margin-left: auto;

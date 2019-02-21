@@ -1,37 +1,55 @@
+// Article List
+const articleList = [];
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-    
-// $.getJSON("/articles", function (data) {
-//     // For each one
-//     console.log("test1: " + data);
-//     const articles = [data];
-    
-//     articles.forEach(article => {
-//         $("#articles").append(`
-//         <p data-id="${article._id}"> 
-//           <a href="https://www.theartnewspaper.com${article.link}">
-//           ${article.title}
-//           </a>
-//         <br />
-//         ${article.excerpt}
-//         </p>
-//         `);
-//     });
-//     console.log("test: " + articles);
+document.addEventListener('DOMContentLoaded', function () {
+    function clear() {
+        $("#articles").empty();
+    }
 
-// });
-    for (var i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      $("#articles").append(`
-      <p data-id="${data[i]._id}"> 
-        <a href="https://www.theartnewspaper.com${data[i].link}">
-        ${data[i].title}
-        </a>
-      <br />
-      ${data[i].excerpt}
-      </p>
-      `);
-  };
+    clear();
+
+    $(document).on("click", "#searchArticles", function () {
+        $.getJSON("/articles", function (data) {
+            $("#articles").empty();
+            //Check for duplicates
+            const articleTitle = data.title;
+            if (articleList.indexOf(articleTitle) === -1) {
+                articleList.push(articleTitle);
+            }
+
+            data.forEach(function (data, index) {
+                const ID = data._id;
+                const title = data.title;
+                const excerpt = data.excerpt;
+                const articleLink = data.link;
+                const articleResult = $(`
+                <p data-id="${ID}"> 
+                        ${title}
+                        Excerpt: ${excerpt}
+                        <a href="https://www.theartnewspaper.com${articleLink}">
+                        (Link)
+                        </a>
+                    </p>
+                <div class="text-center">-----------------------------------</div>
+            `)
+
+                articleResult.appendTo("#articles");
+            });
+        })
+
+        // for (var i = 0; i < data.length; i++) {
+        //     // Display the apropos information on the page
+        //     $("#articles").append(`
+        //         <p data-id="${data[i]._id}"> 
+        //             ${data[i].title}
+        //             Excerpt: ${data[i].excerpt}
+        //             <a href="https://www.theartnewspaper.com${data[i].link}">
+        //             (Link)
+        //             </a>
+        //         </p>
+        //         `);
+        // };
+    });
 });
 
 // Whenever someone clicks a p tag
@@ -49,12 +67,18 @@ $(document).on("click", "p", function () {
         // With that done, add the comment information to the page
         .then(function (data) {
             console.log(data);
+
             // The title of the article
             // An input to enter a new title
             // A textarea to add a new comment body
             // A button to submit a new comment, with the id of the article saved to it
-            
-            //MODAL AREA INSTEAD
+
+            //MODAL AREA
+            $("#title-input").text(data.title);
+            //Look for this id, check for the attribute, replace it with our data
+            $("#save-comment").attr("data-id", data._id);
+            $("#commentModal").modal();
+
             $("#comments").append(`
                 <h2>${data.title}</h2>
                 <input id='title-input' name='title' >
@@ -71,33 +95,32 @@ $(document).on("click", "p", function () {
             }
         });
 });
- 
+
 // When you click the save-comment button
-$(document).on("click", "#save-comment", function() {
+$(document).on("click", "#save-comment", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-  
-    // Run a POST request to change the note, using what's entered in the inputs
+
+    // Run a POST request to change the comment, using what's entered in the inputs
     $.ajax({
-      method: "POST",
-      url: "/articles/" + thisId,
-      data: {
-        // Value taken from title input
-        title: $("#title-input").val(),
-        // Value taken from note textarea
-        body: $("#body-input").val()
-      }
+        method: "POST",
+        url: "/articles/" + thisId,
+        data: {
+            // Value taken from title input
+            title: $("#title-input").val(),
+            // Value taken from comment textarea
+            body: $("#body-input").val()
+        }
     })
-      // With that done
-      .then(function(data) {
-        // Log the response
-        console.log(data);
-        // Empty the notes section
-        $("#comments").empty();
-      });
-  
+        // With that done
+        .then(function (data) {
+            // Log the response
+            console.log(data);
+            // Empty the notes section
+            $("#comments").empty();
+        });
+
     // Also, remove the values entered in the input and textarea for note entry
     $("#title-input").val("");
     $("#body-input").val("");
-  });
-  
+});

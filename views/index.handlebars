@@ -1,8 +1,5 @@
 <div class="container">
   <div class="row">
-    {{!-- <img class="burgerImage mx-auto mt-4" src="/assets/images/burger.png" alt="burger"> --}}
-  </div>
-  <div class="row">
     <h1 class="mx-auto">Art Newspaper Scraper</h1>
   </div>
   <div class="row">
@@ -20,6 +17,28 @@
     </div> --}}
     <div class="col">
       <h2>Art Newspaper Articles</h2>
+      <button type="submit" id="searchArticles">Search Articles</button>
+      <!-- Modal -->
+         <div class="modal" id="commentModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 id="title-input" class="modal-title text-center"> </h4>
+                               <i class="fas fa-book"></i>
+                        </div>
+                        <div class="modal-body">
+                            <textarea id="body-input" name="body"></textarea>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                    <button data-id="#" id="save-comment" class="btn btn-secondary" data-dismiss="modal">
+                                        Save Comment
+                                    </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
       {{!-- <form class="create-form">
 
         <div class="form-group">
