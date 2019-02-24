@@ -1,60 +1,75 @@
 <div class="container">
-  <div class="row">
-    <h1 class="mx-auto">Art Newspaper Scraper</h1>
+  <div class="row header">
+    <div class="col mt-2 bg-secondary d-flex justify-content-center">
+      <img class="newsImg" src="/assets/images/newsImg.jpg" alt="drawing of teacup on newspaper" />
+      <h1 class="mx-auto text-center text-white d-flex align-items-center">The Art Newspaper Scraper</h1>
+    </div>
   </div>
-  <div class="row">
 
-    <div class="col-6">
-      <h2>Art Newspaper Articles</h2>
-      <button type="submit" id="searchArticles">Search Articles</button>
-      <button type="submit" id="viewSavedArticles">Saved Articles</button>
-      <!-- Modal -->
-      <div class="modal" id="commentModal">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 id="title-input" class="modal-title text-center"> </h4>
-              <i class="fas fa-book"></i>
-            </div>
-            <div class="modal-body">
-              <textarea id="body-input" name="body"></textarea>
-
-              <!-- Modal footer -->
-              <div class="modal-footer">
-                <button data-id="#" id="save-comment" class="btn btn-secondary" data-dismiss="modal">
-                  Save Comment
-                </button>
-                <button data-id="#" id="delete-comment" class="btn btn-secondary" data-dismiss="modal">
-                  Delete Comment
-                </button>
-              </div>
-            </div>
-          </div>
+  <div class="row headings">
+    <div class="col-6 pt-2 bg-light">
+      <h2 class="text-center">Art Newspaper Articles</h2>
+      <div class="d-flex pb-2 justify-content-center">
+        <button type="button" class="btn btn-success mx-2" id="searchArticles">Search Articles</button>
+        <button type="button" class="btn btn-success mx-2" id="viewSavedArticles">Saved Articles</button>
+      </div>
+      <div class="spinner d-flex justify-content-center">
+        <div class="spinner-border text-info m-5" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <!-- Modal End -->
+    </div>
+    <div class="col-6 pt-2 pb-2 bg-light">
+      <h2 class="text-center">Saved!</h2>
+    </div>
+  </div>
 
 
-      <div id="wrapper">
+  <div class="row bg-light scrapedArticles">
+    <div class="col-6">
+      <div class="mt-2 pb-2 d-flex justify-content-center">
         <div id="articles"></div>
       </div>
     </div>
     <div class="col-6">
-      <h2>Saved!</h2>
-      <div id="saved-articles"></div>
+      <div class="mt-2 pb-2 d-flex justify-content-center">
+        <div id="saved-articles"></div>
+      </div>
     </div>
 
-
   </div>
-</div>
+  <!-- Modal -->
+  <div class="modal" id="commentModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="title-input" class="modal-title text-center"> </h4>
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="modal-body">
+          <textarea id="body-input" name="body"></textarea>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button data-id="#" class="save-comment btn btn-secondary" data-dismiss="modal">
+              Save Comment
+            </button>
+            <button data-id="#" class="delete-comment btn btn-secondary" data-dismiss="modal">
+              Delete Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal End -->
 
 
-<div><a href="#"></a></div>
-
-<div class="fixed-bottom text-white bg-info border-light border-right-0 border-left-0 border-bottom-0">
-  <small>Copyright &copy;&nbsp; | <a href="mailto:alejosjen@gmail.com"><i class="fas fa-envelope"></i> Email </a>|
-    Jennifer Alejos | <a href="https://alejosjen.github.io/BurgerRestaurant/"><i class="fab fa-github"></i>GitHub</a>
-    |
-    <a href="https://navajoburger.herokuapp.com/">Heroku</a></small>
-</div>
+  <div class="fixed-bottom text-white text-center bg-info border-light border-right-0 border-left-0 border-bottom-0">
+    <small>Jennifer Alejos | <a class="anchorFooter" href="mailto:alejosjen@gmail.com"><i class="fas fa-envelope"></i>
+        Email </a>|
+      <a class="anchorFooter" href="https://github.com/alejosjen/artScrape"><i
+          class="fab fa-github"></i>GitHub</a>
+      | <a class="anchorFooter" href="https://thawing-forest-50146.herokuapp.com">Heroku</a> | Copyright &copy;&nbsp;</small>
+  </div>
 </div>

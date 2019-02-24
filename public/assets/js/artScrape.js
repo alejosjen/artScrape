@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
     clear();
 
     $(document).on("click", "#searchArticles", function () {
+        $(".spinner-border").toggle();
         console.log("Loading...")
         $.get("/api/scrape")
             .then(function (data) {
                 console.log(data);
+                $(".spinner-border").toggle();
                 console.log("Finished loading.")
-                $.getJSON("/articles", function (data) {
+                $.getJSON("/api/articles", function (data) {
                     $("#articles").empty();
 
                     data.forEach(function (data, index) {
@@ -24,17 +26,20 @@ document.addEventListener('DOMContentLoaded', function () {
                         const excerpt = data.excerpt;
                         const articleLink = data.link;
                         const articleResult = $(`
-                      <p> 
-                        ${title}
-                        Excerpt: ${excerpt}
-                        <a href="https://www.theartnewspaper.com${articleLink}">
-                        (Link to view full article)
-                        </a>
-                    </p>
-                    <button class="change-saved" data-id="${ID}">Save</button>
-                <div class="text-center">-----------------------------------</div>
-            `)
-
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">${title}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <a href="https://www.theartnewspaper.com${articleLink}">
+                                     (Link to view full article)
+                                    </a>
+                                </h6>
+                                <p class="card-text">${excerpt}</p>
+                                <button type="button" class="card-link change-saved btn btn-success" data-id="${ID}">
+                                 Save
+                                </button>
+                            </div>
+                      </div>`)
                         articleResult.appendTo("#articles");
                     });
                 })
@@ -63,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 //MODAL AREA
                 $("#title-input").text(data.title);
                 //Look for this id, check for the attribute, replace it with our data
-                $("#save-comment").attr("data-id", data._id);
-                $("#delete-comment").attr("data-id", data._id);
+                $(".save-comment").attr("data-id", data._id);
+                $(".delete-comment").attr("data-id", data._id);
                 //Run the modal
                 $("#commentModal").modal();
 
@@ -114,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // With that done
             .then(function (data) {
                 $(data._id).appendTo("#saved-articles");
+
                 // Log the response
                 console.log(data);
             });
@@ -125,48 +131,77 @@ document.addEventListener('DOMContentLoaded', function () {
         // }, 1000);
         $.get("/api/saved")
             .then(function (data) {
-                data.forEach(function (data) {
-                    console.log(data);
+                data.forEach(function (data, index) {
                     const ID = data._id;
                     const title = data.title;
                     const excerpt = data.excerpt;
                     const articleLink = data.link;
                     const articleResult = $(`
-                      <div class="savedArticle">
-                            <p>
-                               ${title}
-                                Excerpt: ${excerpt}
-                                <a href="https://www.theartnewspaper.com${articleLink}">
-                                (Link to view full article)
-                                </a>
-                            </p>
-                    </div>
-                    
-                    <button class="comment-button" data-id="${ID}">Comment</button>
-                    <button class="delete-article" data-id=${ID}>Delete Article</button>
-	                
-                    <div class="text-center">-----------------------------------</div>
-            `)
-
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">${title}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <a href="https://www.theartnewspaper.com${articleLink}">
+                                    (Link to view full article)
+                                    </a>
+                                </h6>
+                                <p class="card-text">${excerpt}</p>
+            
+                                <button type="button" class="card-link comment-button btn btn-success" data-id="${ID}">Comment</button>
+                                <button type="button" class="card-link delete-article btn btn-success" data-id=${ID}>Delete Article</button>
+                            </div>
+                        </div>`)
                     articleResult.appendTo("#saved-articles");
                 });
-
             })
     });
 
 
-    $(document).on("click", "#delete-comment", function () {
-        let thisId = $(this).attr("data-id");
-        console.log("delete?" + thisId);
+    $(document).on("click", ".delete-comment", function () {
+        let commentDelete = $(this).parents(".modal-body").data();
+        $(this).children("#body-input").empty();
         $.ajax({
             method: "DELETE",
-            url: "/api/articles" / + thisId,
+            url: "/api/articles/" + commentDelete._id,
         })
-            // With that done
             .then(function (data) {
-                $("#body-input").empty();
                 // Log the response
                 console.log(data);
+            })
+            .catch(function (error) {
+                if (error) console.log("Error deleting comment.")
+            });
+    });
+    //     let thisId = $(this).attr("data-id");
+    //     console.log("delete?" + thisId);
+    //     $.ajax({
+    //         method: "DELETE",
+    //         url: "/api/articles" / + thisId,
+    //     })
+    //         // With that done
+    //         .then(function (data) {
+    //             $("#body-input").empty();
+    //             // Log the response
+    //             console.log(data);
+    //         })
+    //         .catch(function (error) {
+    //             if (error) console.log("Error deleting comment.")
+    //         });
+    // });
+
+    $(document).on("click", ".delete-article", function () {
+        let articleDelete = $(this).parents(".card").data();
+        $(this).parents(".card").remove();
+        $.ajax({
+            method: "DELETE",
+            url: "/api/articles/" + articleDelete._id,
+        })
+            .then(function (data) {
+                // Log the response
+                console.log(data);
+            })
+            .catch(function (error) {
+                if (error) console.log("Error deleting article.")
             });
     })
 });
