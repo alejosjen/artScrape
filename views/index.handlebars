@@ -3,79 +3,58 @@
     <h1 class="mx-auto">Art Newspaper Scraper</h1>
   </div>
   <div class="row">
-    {{!-- <div class="col">
-      <h2>Header</h2>
 
-      <ul>
-        {{#each articleTitle}}
-        {{#unless saved}}
-        {{> article-edit saved=false}}
-        {{/unless}}
-        {{/each}}
-      </ul>
-
-    </div> --}}
-    <div class="col">
+    <div class="col-6">
       <h2>Art Newspaper Articles</h2>
       <button type="submit" id="searchArticles">Search Articles</button>
       <button type="submit" id="viewSavedArticles">Saved Articles</button>
       <!-- Modal -->
-         <div class="modal" id="commentModal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 id="title-input" class="modal-title text-center"> </h4>
-                               <i class="fas fa-book"></i>
-                        </div>
-                        <div class="modal-body">
-                            <textarea id="body-input" name="body"></textarea>
-
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                    <button data-id="#" id="save-comment" class="btn btn-secondary" data-dismiss="modal">
-                                        Save Comment
-                                    </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div class="modal" id="commentModal">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 id="title-input" class="modal-title text-center"> </h4>
+              <i class="fas fa-book"></i>
             </div>
-      {{!-- <form class="create-form">
+            <div class="modal-body">
+              <textarea id="body-input" name="body"></textarea>
 
-        <div class="form-group">
-          <label for="article" class="article">Burger Name:</label>
-          <input type="text" id="burger" name="name" required>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button data-id="#" id="save-comment" class="btn btn-secondary" data-dismiss="modal">
+                  Save Comment
+                </button>
+                <button data-id="#" id="delete-comment" class="btn btn-secondary" data-dismiss="modal">
+                  Delete Comment
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
- 
-        <button type="submit">Add Burger</button>
-      </form> --}}
+      </div>
+      <!-- Modal End -->
+
+
       <div id="wrapper">
         <div id="articles"></div>
-        <div id="comments"></div>
       </div>
     </div>
-    {{!-- <div class="col">
-      <h2>Devoured!</h2>
-
-      <ul>
-        {{#each burgers}}
-        {{#if devoured}}
-        {{> burger-edit devoured=false}}
-        {{/if}}
-        {{/each}}
-      </ul>
+    <div class="col-6">
+      <h2>Saved!</h2>
+      <div id="saved-articles"></div>
+    </div>
 
 
-    </div> --}}
   </div>
+</div>
 
 
-  <div><a href="https://pngtree.com/">Graphics from pngtree.com</a></div>
+<div><a href="#"></a></div>
 
-  <div class="fixed-bottom text-white bg-info border-light border-right-0 border-left-0 border-bottom-0">
-    <small>Copyright &copy;&nbsp; | <a href="mailto:alejosjen@gmail.com"><i class="fas fa-envelope"></i> Email </a>|
-      Jennifer Alejos | <a href="https://alejosjen.github.io/BurgerRestaurant/"><i class="fab fa-github"></i>GitHub</a>
-      |
-      <a href="https://navajoburger.herokuapp.com/">Heroku</a></small>
-  </div>
+<div class="fixed-bottom text-white bg-info border-light border-right-0 border-left-0 border-bottom-0">
+  <small>Copyright &copy;&nbsp; | <a href="mailto:alejosjen@gmail.com"><i class="fas fa-envelope"></i> Email </a>|
+    Jennifer Alejos | <a href="https://alejosjen.github.io/BurgerRestaurant/"><i class="fab fa-github"></i>GitHub</a>
+    |
+    <a href="https://navajoburger.herokuapp.com/">Heroku</a></small>
+</div>
 </div>

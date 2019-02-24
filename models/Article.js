@@ -9,12 +9,13 @@ var ArticleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    required: true,
+    required: true
   },
   // `link` is required and of type String
   link: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   excerpt: {
     type: String,
@@ -25,7 +26,11 @@ var ArticleSchema = new Schema({
   // This allows us to populate the Article with an associated Comment
   comment: {
     type: Schema.Types.ObjectId,
-    ref: "Article"
+    ref: "Comment"
+  },
+  saved: {
+    type: Boolean,
+    default: false
   }
 });
 
