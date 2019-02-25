@@ -160,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $(document).on("click", ".delete-comment", function () {
         let commentDelete = $(this).data("id");
         console.log(commentDelete);
-        ("#body-input").empty();
         $.ajax({
             method: "DELETE",
             url: "/api/articles/" + commentDelete,
