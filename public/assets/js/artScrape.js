@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </a>
                                 </h6>
                                 <p class="card-text">${excerpt}</p>
-                                <button type="button" class="card-link change-saved btn btn-success" data-id="${ID}">
+                                <button type="button" class="card-link change-saved btn btn-info" data-id="${ID}">
                                  Save
                                 </button>
                             </div>
@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // When you click on the save button, patch article as saved
     $(document).on("click", ".change-saved", function () {
         let thisId = $(this).attr("data-id");
+        $(this).parents(".card").remove();
         // console.log(thisId);
         $.ajax({
             method: "PATCH",
@@ -151,8 +152,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </h6>
                                 <p class="card-text">${excerpt}</p>
             
-                                <button type="button" class="card-link comment-button btn btn-success" data-id="${ID}">Comment</button>
-                                <button type="button" class="card-link delete-article btn btn-success" data-id=${ID}>Delete Article</button>
+                                <button type="button" class="card-link comment-button btn btn-info" data-id="${ID}">Comment</button>
+                                <button type="button" class="card-link delete-article btn btn-info" data-id=${ID}>Delete Article</button>
                             </div>
                         </div>`)
                     articleResult.appendTo("#saved-articles");

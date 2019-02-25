@@ -2,7 +2,7 @@ body {
   background-color: #CEEDFF;
   color: #000;
   font-family: 'Vollkorn', serif;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 }
 
 h1 {
@@ -24,13 +24,15 @@ h1 {
 
 #articles {
   overflow: auto;
-
 }
 
+.modal-content {
+  background-color: #CEEDFF;
+}
 textarea, input {
   display: block;
   width: 100%;
-  background-color: #FCF5C7;
+  background-color: #FFF;
 }
 
 input {
@@ -41,4 +43,5 @@ input {
 textarea {
   height: 200px;
   font-size: 18px;
+  border-radius: 3px;
 }

@@ -1,17 +1,17 @@
 <div class="container">
   <div class="row header">
-    <div class="col mt-2 bg-secondary d-flex justify-content-center">
-      <img class="newsImg" src="/assets/images/newsImg.jpg" alt="drawing of teacup on newspaper" />
+    <div class="col mt-2 bg-secondary d-flex justify-content-center align-self-center">
+      <img class="newsImg d-flex align-self-center" src="/assets/images/newsImg.jpg" alt="drawing of teacup on newspaper" />
       <h1 class="mx-auto text-center text-white d-flex align-items-center">The Art Newspaper Scraper</h1>
     </div>
   </div>
 
-  <div class="row headings">
-    <div class="col-6 pt-2 bg-light">
+  <div class="row headings bg-light">
+    <div class="col-6 pt-2">
       <h2 class="text-center">Art Newspaper Articles</h2>
       <div class="d-flex pb-2 justify-content-center">
-        <button type="button" class="btn btn-success mx-2" id="searchArticles">Search Articles</button>
-        <button type="button" class="btn btn-success mx-2" id="viewSavedArticles">Saved Articles</button>
+        <button type="button" class="btn btn-info mx-2" id="searchArticles">Search Articles</button>
+        <button type="button" class="btn btn-info mx-2" id="viewSavedArticles">Saved Articles</button>
       </div>
       <div class="spinner d-flex justify-content-center">
         <div class="spinner-border text-info m-5" role="status">
@@ -19,11 +19,10 @@
         </div>
       </div>
     </div>
-    <div class="col-6 pt-2 pb-2 bg-light">
-      <h2 class="text-center">Saved!</h2>
+    <div class="col-6 pt-4 d-flex justify-content-center">
+      <h4 class="text-center ">Click Saved Articles to view your saves.</h4>
     </div>
   </div>
-
 
   <div class="row bg-light scrapedArticles">
     <div class="col-6">
