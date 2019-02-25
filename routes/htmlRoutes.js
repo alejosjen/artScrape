@@ -148,5 +148,17 @@ module.exports = function (app) {
             res.json(err);
         });
     })
+
+    app.delete("/api/articles/:id", function(req, res){
+        db.Comment.deleteOne( {_id: req.params.id} )
+        .then(function (dbComment) {
+            // If we were able to successfully find an Article with the given id, send it back to the client
+            res.json(dbComment);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+    })
  
 };

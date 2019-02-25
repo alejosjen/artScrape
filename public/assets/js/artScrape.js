@@ -158,11 +158,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $(document).on("click", ".delete-comment", function () {
-        let commentDelete = $(this).parents(".modal-body").data();
-        $(this).children("#body-input").empty();
+        let commentDelete = $(this).data("id");
+        console.log(commentDelete);
+        ("#body-input").empty();
         $.ajax({
             method: "DELETE",
-            url: "/api/articles/" + commentDelete._id,
+            url: "/api/articles/" + commentDelete,
         })
             .then(function (data) {
                 // Log the response
@@ -190,11 +191,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
 
     $(document).on("click", ".delete-article", function () {
-        let articleDelete = $(this).parents(".card").data();
+        let articleDelete = $(this).data("id");
+        // console.log(articleDelete);
         $(this).parents(".card").remove();
         $.ajax({
             method: "DELETE",
-            url: "/api/articles/" + articleDelete._id,
+            url: "/api/articles/" + articleDelete,
         })
             .then(function (data) {
                 // Log the response
