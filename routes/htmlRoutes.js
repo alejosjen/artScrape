@@ -48,8 +48,6 @@ module.exports = function (app) {
         });
     });
 
-
-
     app.get("/", function (req, res) {
         db.Article.find({ saved: true })
             .then(function (dbArticles) {
@@ -83,6 +81,7 @@ module.exports = function (app) {
             // ..and populate all of the comments associated with it
             .populate("comment")
             .then(function (dbArticle) {
+                console.log(dbArticle);
                 // If we were able to successfully find an Article with the given id, send it back to the client
                 res.json(dbArticle);
             })
@@ -149,7 +148,7 @@ module.exports = function (app) {
         });
     })
 
-    app.delete("/api/articles/:id", function(req, res){
+    app.delete("/api/comments/:id", function(req, res){
         db.Comment.deleteOne( {_id: req.params.id} )
         .then(function (dbComment) {
             // If we were able to successfully find an Article with the given id, send it back to the client

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    <a href=${articleLink}>
+                                    <a href=${articleLink} target="_blank">
                                      (Link to view full article)
                                     </a>
                                 </h6>
@@ -64,17 +64,20 @@ document.addEventListener('DOMContentLoaded', function () {
             // With that done, add the comment information to the page
             .then(function (data) {
                 console.log(data);
-
                 //MODAL AREA
                 $("#title-input").text(data.title);
                 //Look for this id, check for the attribute, replace it with our data
                 $(".save-comment").attr("data-id", data._id);
-                $(".delete-comment").attr("data-id", data._id);
                 //Run the modal
                 $("#commentModal").modal();
 
                 // If there's a comment in the article
                 if (data.comment) {
+                    // data.comment.forEach(function(comment){
+                        
+
+                    // })
+                    $(".delete-comment").attr("data-id", data.comment._id);
                     // Place the body of the comment in the body textarea
                     $("#body-input").val(data.comment.body);
                 }
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // When you click the save-comment button
-    $(document).on("click", "#save-comment", function () {
+    $(document).on("click", ".save-comment", function () {
         // Grab the id associated with the article from the submit button
         let thisId = $(this).attr("data-id");
 
@@ -129,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // $('html, body').animate({
         //     scrollTop: $("#saved-articles").offset().top
         // }, 1000);
+        $("#saved-articles").empty();
         $.get("/api/saved")
             .then(function (data) {
                 data.forEach(function (data, index) {
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    <a href=${articleLink}>
+                                    <a href=${articleLink} target="_blank">
                                     (Link to view full article)
                                     </a>
                                 </h6>
@@ -162,9 +166,11 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(deleteComment);
         $.ajax({
             method: "DELETE",
-            url: "/api/articles/" + deleteComment,
+            url: "/api/comments/" + deleteComment,
         })
             .then(function (data) {
+                console.log("testing");
+                $("#body-input").val("");
                 // Log the response
                 console.log(data);
             })
@@ -172,22 +178,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (error) console.log("Error deleting comment.")
             });
     });
-    //     let thisId = $(this).attr("data-id");
-    //     console.log("delete?" + thisId);
-    //     $.ajax({
-    //         method: "DELETE",
-    //         url: "/api/articles" / + thisId,
-    //     })
-    //         // With that done
-    //         .then(function (data) {
-    //             $("#body-input").empty();
-    //             // Log the response
-    //             console.log(data);
-    //         })
-    //         .catch(function (error) {
-    //             if (error) console.log("Error deleting comment.")
-    //         });
-    // });
 
     $(document).on("click", ".delete-article", function () {
         let articleDelete = $(this).data("id");
