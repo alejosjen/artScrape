@@ -19,11 +19,13 @@ module.exports = function (app) {
                 const title = $(element).children("a").text();
                 const scrapedLink = $(element).children("a").attr("href");
                 const excerpt = $(element).children("div.cp-details").children("p.cp-excerpt").text();
+                const image = $(element).children("div.cp-thumbnail-cont").children("div.cp-thumbnail").css("background-image").slice(4, -1);
                 const link = `https://www.theartnewspaper.com${scrapedLink}`;
                 result = {
                     title: title,
                     link: link,
-                    excerpt: excerpt
+                    excerpt: excerpt,
+                    image: image
                 };
                 results.push(result);
                 // console.log(results);

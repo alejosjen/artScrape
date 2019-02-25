@@ -24,9 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         const ID = data._id;
                         const title = data.title;
                         const excerpt = data.excerpt;
+                        const articleImage = data.image;
                         const articleLink = data.link;
                         const articleResult = $(`
                         <div class="card" style="width: 18rem;">
+                            <img src="${articleImage}" class="card-img-top" alt="article image">
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
@@ -140,9 +142,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     const ID = data._id;
                     const title = data.title;
                     const excerpt = data.excerpt;
+                    const articleImage = data.image;
                     const articleLink = data.link;
                     const articleResult = $(`
                         <div class="card" style="width: 18rem;">
+                        <img src="${articleImage}" class="card-img-top" alt="article image">
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
