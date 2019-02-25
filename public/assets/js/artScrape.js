@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $(document).on("click", ".delete-comment", function () {
-        let commentDelete = $(this).data("id");
-        console.log(commentDelete);
+        let deleteComment = $(this).data("id");
+        console.log(deleteComment);
         $.ajax({
             method: "DELETE",
-            url: "/api/articles/" + commentDelete,
+            url: "/api/articles/" + deleteComment,
         })
             .then(function (data) {
                 // Log the response
