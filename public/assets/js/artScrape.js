@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     $("#articles").empty();
 
                     data.forEach(function (data, index) {
-                        const ID = data._id;
-                        const title = data.title;
-                        const excerpt = data.excerpt;
-                        const articleImage = data.image;
-                        const articleLink = data.link;
-                        const articleResult = $(`
+                        let ID = data._id;
+                        let title = data.title;
+                        let excerpt = data.excerpt;
+                        let articleImage = data.image;
+                        let articleLink = data.link;
+                        let articleResult = $(`
                         <div class="card" style="width: 18rem;">
                             <img src="${articleImage}" class="card-img-top" alt="article image">
                             <div class="card-body">
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // If there's a comment in the article
                 if (data.comment) {
                     // data.comment.forEach(function(comment){
-                        
+                        //Make space to add multiple divs to hold multiple comments
 
                     // })
                     $(".delete-comment").attr("data-id", data.comment._id);
@@ -139,12 +139,12 @@ document.addEventListener('DOMContentLoaded', function () {
         $.get("/api/saved")
             .then(function (data) {
                 data.forEach(function (data, index) {
-                    const ID = data._id;
-                    const title = data.title;
-                    const excerpt = data.excerpt;
-                    const articleImage = data.image;
-                    const articleLink = data.link;
-                    const articleResult = $(`
+                    let ID = data._id;
+                    let title = data.title;
+                    let excerpt = data.excerpt;
+                    let articleImage = data.image;
+                    let articleLink = data.link;
+                    let articleResult = $(`
                         <div class="card" style="width: 18rem;">
                         <img src="${articleImage}" class="card-img-top" alt="article image">
                             <div class="card-body">
