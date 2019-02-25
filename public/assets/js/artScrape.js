@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    <a href="https://www.theartnewspaper.com${articleLink}">
+                                    <a href=${articleLink}>
                                      (Link to view full article)
                                     </a>
                                 </h6>
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="card-body">
                                 <h5 class="card-title">${title}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    <a href="https://www.theartnewspaper.com${articleLink}">
+                                    <a href=${articleLink}>
                                     (Link to view full article)
                                     </a>
                                 </h6>
